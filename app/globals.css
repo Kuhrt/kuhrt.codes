@@ -17,6 +17,7 @@
 
   --color-primary: var(--primary);
   --color-primary-dim: var(--primary-dim);
+  --color-secondary: var(--secondary);
   --color-surface: var(--surface);
   --color-text: var(--text);
   --color-text-muted: var(--text-muted);
@@ -38,6 +39,17 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+
+  ::selection {
+    @apply bg-secondary text-background;
+  }
+
+  a,
+  a:hover,
+  a:focus,
+  a:active {
+    cursor: none;
   }
 }
 

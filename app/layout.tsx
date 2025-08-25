@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import localFont from 'next/font/local';
 
+import NavBar from '@/components/navigation/NavBar';
 import Cursor from '@/components/ui/Cursor';
 
 const fontInter = Inter({
@@ -19,13 +20,6 @@ const fontJetBrainsMono = JetBrains_Mono({
 const fontClashDisplay = localFont({
   display: 'swap',
   src: '../public/fonts/ClashDisplay-Variable.woff2',
-  // src: [
-  //   {
-  //     path: '../public/fonts/ClashDisplay-Bold.woff2',
-  //     weight: '700',
-  //     style: 'normal'
-  //   }
-  // ],
   variable: '--font-clash-display'
 });
 
@@ -44,6 +38,9 @@ export default function RootLayout({
       <body
         className={`${fontInter.variable} ${fontJetBrainsMono.variable} ${fontClashDisplay.variable} antialiased cursor-none`}
       >
+        <header className="fixed top-0 left-0 right-0 z-50">
+          <NavBar />
+        </header>
         {children}
         <Cursor />
       </body>

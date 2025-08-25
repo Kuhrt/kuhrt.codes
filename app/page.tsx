@@ -7,7 +7,7 @@ export default function HomePage() {
   return (
     <>
       <main>
-        <section className="relative flex flex-col items-center justify-center h-screen">
+        <section className="relative flex flex-col items-center justify-center h-screen after:content-[''] after:absolute after:top-1/2 after:left-0 after:right-0 after:bottom-0 after:bg-gradient-to-b after:from-transparent after:to-background after:z-20">
           <CodeSymbolParticles />
           <Container className="text-center">
             <GradientHeading level="h1" text="Hello, I'm Kuhrt" />

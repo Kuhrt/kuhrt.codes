@@ -93,12 +93,12 @@ export default function CodeSymbolParticle(
 
     if (!context) return null;
 
-    const canvasSize = 128;
+    const canvasSize = 256;
     canvas.width = canvasSize;
     canvas.height = canvasSize;
 
     context.fillStyle = COLOR_PRIMARY;
-    context.font = `bold 80px ${FONT_MONO}`;
+    context.font = `bold 160px ${FONT_MONO}`;
     context.textAlign = 'center';
     context.textBaseline = 'middle';
 
