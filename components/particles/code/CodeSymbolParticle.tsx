@@ -19,6 +19,7 @@ export default function CodeSymbolParticle(
   const { mousePosition, symbol, ...rest } = props;
 
   const [isInteracting, setIsInteracting] = useState(false);
+  const [opacity, setOpacity] = useState(0.5);
 
   const velocity = useMemo(
     () =>
@@ -42,7 +43,7 @@ export default function CodeSymbolParticle(
     const interactionDistance = 15;
 
     // Only interact if the mouse has moved (Defaults to 0,0)
-    // TODO: Let go of interactions if mouse is at the edge of the section
+    // TODO: "Let go" of interactions if mouse is at the edge of the section
     if (
       mousePosition.x !== 0 &&
       mousePosition.y !== 0 &&
@@ -68,13 +69,52 @@ export default function CodeSymbolParticle(
     // Position
     ref.current.position.add(velocity);
 
-    // Check boundary with bounce
+    // Boundaries
+    const maxDistance = 25;
+    const fadeStartDistance = maxDistance * 0.6;
+    const calculateAxisOpacity = (distance: number) => {
+      const fadeProgress =
+        (distance - fadeStartDistance) / (maxDistance - fadeStartDistance);
+      return Math.max(0, 1 - fadeProgress);
+    };
+
+    const horizontalDistance = Math.abs(ref.current.position.x);
+    const verticalDistance = Math.abs(ref.current.position.y);
+    const depthDistance = Math.abs(ref.current.position.z);
+
+    // Multipliers for each axis
+    let horizontalOpacity = 1;
+    let verticalOpacity = 1;
+    let depthOpacity = 1;
+
+    if (horizontalDistance > fadeStartDistance) {
+      horizontalOpacity = calculateAxisOpacity(horizontalDistance);
+    }
+
+    if (verticalDistance > fadeStartDistance) {
+      verticalOpacity = calculateAxisOpacity(verticalDistance);
+    }
+
+    if (depthDistance > fadeStartDistance) {
+      depthOpacity = calculateAxisOpacity(depthDistance);
+    }
+
+    const minimumOpacity = Math.min(
+      horizontalOpacity,
+      verticalOpacity,
+      depthOpacity
+    );
+    setOpacity(0.5 * minimumOpacity);
+
+    // Check boundary
     ['x', 'y', 'z'].forEach((axis) => {
       const axisProp = axis as 'x' | 'y' | 'z';
-      if (Math.abs(ref.current.position[axisProp]) > 25) {
+      if (Math.abs(ref.current.position[axisProp]) > maxDistance) {
+        // Bounce back with reduced velocity
         velocity[axisProp] *= -0.8;
+
         ref.current.position[axisProp] =
-          Math.sign(ref.current.position[axisProp]) * 25;
+          Math.sign(ref.current.position[axisProp]) * maxDistance;
       }
     });
 
@@ -125,7 +165,7 @@ export default function CodeSymbolParticle(
           alphaTest={0.1}
           map={texture}
           transparent
-          opacity={0.5}
+          opacity={opacity}
         />
       </mesh>
     </group>

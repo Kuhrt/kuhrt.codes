@@ -7,7 +7,7 @@ export default function Container(props: HTMLAttributes<HTMLDivElement>) {
   return (
     <div
       {...restProps}
-      className={cn('relative px-2 max-w-7xl mx-auto z-30', className)}
+      className={cn('relative px-6 max-w-7xl mx-auto z-30', className)}
     >
       {children}
     </div>

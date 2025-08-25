@@ -9,7 +9,7 @@ export default function NavBar() {
     <div className="flex items-center gap-4 w-full px-4 py-2">
       <Link
         href="/"
-        className="text-foreground font-display text-xl font-black"
+        className="text-foreground font-display text-xl font-black uppercase"
         data-hover={CURSOR_DATA_HOVER}
       >
         Kuhrt Cowan
