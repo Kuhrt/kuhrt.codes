@@ -14,6 +14,7 @@ export default function CodeSymbolParticles() {
 
   useEffect(() => {
     const mousePosition = new Vector2();
+    // TODO: Only do this with the section this is in
     const handleMouseMove = (event: MouseEvent) => {
       const normalizedX = (event.clientX / window.innerWidth) * 2 - 1;
       const normalizedY = -(event.clientY / window.innerHeight) * 2 + 1;
@@ -49,6 +50,7 @@ export default function CodeSymbolParticles() {
         return particleNodes;
       })
     );
+
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 

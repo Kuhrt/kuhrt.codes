@@ -1,6 +1,6 @@
 import Container from './Container';
 
-describe('Container Component', () => {
+describe('<Container />', () => {
   it('renders with default props', () => {
     cy.mount(<Container>Test content</Container>);
 

@@ -1,6 +1,6 @@
 import GradientHeading from './GradientHeading';
 
-describe('GradientHeading Component', () => {
+describe('<GradientHeading />', () => {
   it('renders h1 heading with correct text', () => {
     cy.mount(<GradientHeading level="h1" text="Main Title" />);
 

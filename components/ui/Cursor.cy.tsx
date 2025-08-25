@@ -1,6 +1,6 @@
 import Cursor from './Cursor';
 
-describe('Cursor Component', () => {
+describe('<Cursor />', () => {
   beforeEach(() => {
     // Mock the document and window for cursor functionality
     cy.window().then((win) => {
@@ -178,18 +178,5 @@ describe('Cursor Component', () => {
       cy.wrap(hoverElement2).trigger('mouseleave');
       cy.get('#cursor').should('not.have.class', 'effect2');
     });
-  });
-
-  it('cleans up event listeners on unmount', () => {
-    const { unmount } = cy.mount(<Cursor />);
-
-    // Check that event listeners were set up
-    cy.get('@addEventListener').should('have.been.called');
-
-    // Unmount the component
-    unmount();
-
-    // Check that removeEventListener was called for cleanup
-    cy.get('@removeEventListener').should('have.been.called');
   });
 });

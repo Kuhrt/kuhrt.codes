@@ -31,7 +31,7 @@ export default function CodeSymbolParticle(
   );
 
   useFrame((state) => {
-    // Mouse interaction
+    // Give the mouse gravity
     const mouseAttraction = new Vector3(
       mousePosition.x * 25,
       mousePosition.y * 15,
@@ -41,7 +41,13 @@ export default function CodeSymbolParticle(
     const distance = ref.current.position.distanceTo(mouseAttraction);
     const interactionDistance = 15;
 
-    if (distance < interactionDistance) {
+    // Only interact if the mouse has moved (Defaults to 0,0)
+    // TODO: Let go of interactions if mouse is at the edge of the section
+    if (
+      mousePosition.x !== 0 &&
+      mousePosition.y !== 0 &&
+      distance < interactionDistance
+    ) {
       setIsInteracting(true);
 
       const force = Math.max(0.0005, (interactionDistance - distance) * 0.0001);
@@ -80,13 +86,13 @@ export default function CodeSymbolParticle(
     ref.current.lookAt(state.camera.position);
   });
 
+  // Turn text symbol into a texture
   const texture = useMemo(() => {
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
 
     if (!context) return null;
 
-    // Set canvas size
     const canvasSize = 128;
     canvas.width = canvasSize;
     canvas.height = canvasSize;
@@ -96,10 +102,8 @@ export default function CodeSymbolParticle(
     context.textAlign = 'center';
     context.textBaseline = 'middle';
 
-    // Clear canvas and draw text
     context.fillText(symbol, canvasSize / 2, canvasSize / 2);
 
-    // Create and return texture
     return new CanvasTexture(canvas);
   }, [symbol]);
 

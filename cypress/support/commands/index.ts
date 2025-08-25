@@ -29,10 +29,19 @@
 
 import { mount } from 'cypress/react';
 
+// For some reason, we have to declare the mount command here.
+// Any other additions should go to /types/cypress.d.ts
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace Cypress {
+    interface Chainable {
+      mount: typeof mount;
+    }
+  }
+}
+
 // Global commands
-Cypress.Commands.add('mount', (component, options = {}) => {
-  return mount(component, options);
-});
+Cypress.Commands.add('mount', mount);
 
 Cypress.Commands.add('getBySel', (selector, ...args) => {
   return cy.get(`[data-cy=${selector}]`, ...args);
