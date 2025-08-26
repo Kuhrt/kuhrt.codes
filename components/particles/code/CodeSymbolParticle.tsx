@@ -31,7 +31,8 @@ export default function CodeSymbolParticle(
     []
   );
 
-  useFrame((state) => {
+  // TODO: Use delta time where needed
+  useFrame((state, delta) => {
     // Give the mouse gravity
     const mouseAttraction = new Vector3(
       mousePosition.x * 25,
@@ -67,7 +68,7 @@ export default function CodeSymbolParticle(
     }
 
     // Position
-    ref.current.position.add(velocity);
+    ref.current.position.add(velocity.clone().multiplyScalar(delta * 60));
 
     // Boundaries
     const maxDistance = 25;
@@ -119,8 +120,8 @@ export default function CodeSymbolParticle(
     });
 
     const rotationSpeed = isInteracting ? 0.03 : 0.01;
-    ref.current.rotation.x += rotationSpeed;
-    ref.current.rotation.y += rotationSpeed;
+    ref.current.rotation.x += rotationSpeed * delta * 60;
+    ref.current.rotation.y += rotationSpeed * delta * 60;
 
     // Always face camera
     ref.current.lookAt(state.camera.position);
@@ -157,17 +158,15 @@ export default function CodeSymbolParticle(
   }, [texture]);
 
   return (
-    <group>
-      <mesh {...rest} ref={ref}>
-        <planeGeometry args={[2, 2]} />
-        <meshBasicMaterial
-          color={COLOR_PRIMARY}
-          alphaTest={0.1}
-          map={texture}
-          transparent
-          opacity={opacity}
-        />
-      </mesh>
-    </group>
+    <mesh {...rest} ref={ref}>
+      <planeGeometry args={[2, 2]} />
+      <meshBasicMaterial
+        color={COLOR_PRIMARY}
+        alphaTest={0.1}
+        map={texture}
+        transparent
+        opacity={opacity}
+      />
+    </mesh>
   );
 }

@@ -3,6 +3,8 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { Vector2, Vector3 } from 'three';
 
+import { threeSectionMouseMove } from '@/utils/three';
+
 import ParticleScene from '../ParticleScene';
 import CodeSymbolParticle from './CodeSymbolParticle';
 
@@ -14,11 +16,9 @@ export default function CodeSymbolParticles() {
 
   useEffect(() => {
     const mousePosition = new Vector2();
-    // TODO: Only do this with the section this is in
+
     const handleMouseMove = (event: MouseEvent) => {
-      const normalizedX = (event.clientX / window.innerWidth) * 2 - 1;
-      const normalizedY = -(event.clientY / window.innerHeight) * 2 + 1;
-      mousePosition.set(normalizedX, normalizedY);
+      threeSectionMouseMove(event, mousePosition);
     };
     window.addEventListener('mousemove', handleMouseMove);
 
@@ -56,7 +56,7 @@ export default function CodeSymbolParticles() {
 
   return (
     <ParticleScene cameraPosition={new Vector3(0, 0, 25)}>
-      {particles.map((particle) => particle)}
+      <group>{particles.map((particle) => particle)}</group>
     </ParticleScene>
   );
 }

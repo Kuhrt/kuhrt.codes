@@ -59,7 +59,11 @@
   a,
   a:hover,
   a:focus,
-  a:active {
+  a:active,
+  button,
+  button:hover,
+  button:focus,
+  button:active {
     cursor: none;
   }
 }

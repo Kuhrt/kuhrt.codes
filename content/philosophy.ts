@@ -1,4 +1,4 @@
-import { Philosophy } from '@/models/philosopy/Philosophy';
+import { Philosophy } from '@/models/philosophy/Philosophy';
 
 export const philosophies: Philosophy[] = [
   {
@@ -72,6 +72,10 @@ export const philosophies: Philosophy[] = [
     quote: 'Agile means how fast a team can change direction when needed',
     points: [
       [
+        'Change is inevitable',
+        'Great teams anticipate and adapt. Build systems and culture that embrace evolution, not resist it'
+      ],
+      [
         'Lifetime learning is non-negotiable',
         'Technology changes, curiosity is constant'
       ],
@@ -82,10 +86,6 @@ export const philosophies: Philosophy[] = [
       [
         'Trust is the foundation of velocity',
         'Teams that trust each other, and what they can do, ship faster and better'
-      ],
-      [
-        'Change is inevitable',
-        'Great teams anticipate and adapt. Build systems and culture that embrace evolution, not resist it'
       ]
     ]
   }

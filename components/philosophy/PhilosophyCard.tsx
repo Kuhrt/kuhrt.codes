@@ -1,5 +1,5 @@
 import { CURSOR_DATA_GLOW } from '@/constants/cursor';
-import { Philosophy } from '@/models/philosopy/Philosophy';
+import { Philosophy } from '@/models/philosophy/Philosophy';
 import { HeadingLevel } from '@/models/text/HeadingLevel';
 
 import { Card, CardContent, CardTitle } from '../ui/Card';
