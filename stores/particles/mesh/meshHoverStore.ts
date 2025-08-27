@@ -1,12 +1,12 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-export interface HoverStore {
+export interface MeshHoverStore {
   hoveredNodeId: string | null;
   setHoveredNode: (id: string | null) => void;
 }
 
-const useHoverStore = create<HoverStore>()(
+const useMeshHoverStore = create<MeshHoverStore>()(
   devtools((set) => ({
     hoveredNodeId: null,
 
@@ -16,4 +16,4 @@ const useHoverStore = create<HoverStore>()(
   }))
 );
 
-export default useHoverStore;
+export default useMeshHoverStore;

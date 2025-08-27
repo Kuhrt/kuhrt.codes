@@ -1,16 +1,16 @@
 'use client';
 
 import { useFrame } from '@react-three/fiber';
-import { useEffect, useRef } from 'react';
+import { RefObject, useEffect, useRef } from 'react';
 import { PerspectiveCamera } from 'three';
 
-import useAnimationStore from '@/stores/particles-mesh/animationStore';
-import useHoverStore from '@/stores/particles-mesh/hoverStore';
-import useSkillInteractionStore from '@/stores/particles-mesh/skillInteractionStore';
+import useMeshAnimationStore from '@/stores/particles/mesh/meshAnimationStore';
+import useMeshHoverStore from '@/stores/particles/mesh/meshHoverStore';
+import useSkillInteractionStore from '@/stores/particles/mesh/skillInteractionStore';
 
 interface Props {
   camera: PerspectiveCamera;
-  connectionsGroupRef: React.MutableRefObject<{
+  connectionsGroupRef: RefObject<{
     updateConnections: () => void;
   } | null>;
 }
@@ -19,9 +19,9 @@ export default function UnifiedAnimationController({
   camera,
   connectionsGroupRef
 }: Props) {
-  const { isAnimating, isPaused } = useAnimationStore();
+  const { isAnimating, isPaused } = useMeshAnimationStore();
   const { isZoomed, zoomTarget, zoomLookAt } = useSkillInteractionStore();
-  const { hoveredNodeId } = useHoverStore();
+  const { hoveredNodeId } = useMeshHoverStore();
 
   const timeRef = useRef(0);
   const isInitialized = useRef(false);
@@ -38,20 +38,17 @@ export default function UnifiedAnimationController({
   // Handle hover state changes - pause animation when hovering
   useEffect(() => {
     if (hoveredNodeId && !isZoomed) {
-      useAnimationStore.getState().pauseAnimation();
+      useMeshAnimationStore.getState().pauseAnimation();
     } else if (!hoveredNodeId && !isZoomed && !isAnimating) {
-      useAnimationStore.getState().resumeAnimation();
+      useMeshAnimationStore.getState().resumeAnimation();
     }
   }, [hoveredNodeId, isZoomed, isAnimating]);
 
   useFrame((state, delta) => {
-    // Handle camera animation
     if (isZoomed && zoomTarget && zoomLookAt) {
-      // Zoom to target
       camera.position.lerp(zoomTarget, 0.08);
       camera.lookAt(zoomLookAt);
     } else if (!isZoomed && !isPaused) {
-      // Always animate when not zoomed and not paused
       timeRef.current += delta;
       const cameraTime = timeRef.current * 0.2;
       camera.position.x = Math.sin(cameraTime) * 28;

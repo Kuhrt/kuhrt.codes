@@ -5,8 +5,8 @@ import { type Mesh } from 'three';
 
 import { MESH_NETWORK_SPHERE } from '@/constants/particles/mesh';
 import { Skill } from '@/models/skills/Skill';
-import useHoverStore from '@/stores/particles-mesh/hoverStore';
-import useSkillInteractionStore from '@/stores/particles-mesh/skillInteractionStore';
+import useMeshHoverStore from '@/stores/particles/mesh/meshHoverStore';
+import useSkillInteractionStore from '@/stores/particles/mesh/skillInteractionStore';
 
 interface Props {
   nodeIndex: number;
@@ -26,7 +26,7 @@ export default function MeshSkillNode({
   totalNodes
 }: Props) {
   const { selectAndZoomToSkill, isZoomed } = useSkillInteractionStore();
-  const { hoveredNodeId, setHoveredNode } = useHoverStore();
+  const { hoveredNodeId, setHoveredNode } = useMeshHoverStore();
 
   const meshRef = useRef<Mesh>(null!);
   const isHovered = hoveredNodeId === skill.name;
@@ -56,8 +56,8 @@ export default function MeshSkillNode({
     meshRef.current.position.set(initialX, initialY, initialZ);
   }, [nodeIndex, totalNodes]);
 
+  // Update outside ref pattern
   useEffect(() => {
-    // Call onRef when the component mounts/unmounts
     if (meshRef.current) {
       onRef(meshRef.current);
     }
@@ -95,7 +95,6 @@ export default function MeshSkillNode({
   const handlePointerDown = useCallback(() => {
     if (!!onClick) onClick(skill);
 
-    // Use unified store method - handles all logic in one place
     selectAndZoomToSkill(skill, meshRef.current.position);
   }, [onClick, skill, selectAndZoomToSkill]);
 

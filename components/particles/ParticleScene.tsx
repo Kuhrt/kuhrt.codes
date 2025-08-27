@@ -1,22 +1,12 @@
 'use client';
 
 import { Canvas } from '@react-three/fiber';
-import { createContext, useContext, useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { PerspectiveCamera, Vector3 } from 'three';
 
+import { CameraContext } from '@/contexts/ParticleCameraContext';
 import { cn } from '@/utils/styles';
 import { getCameraAspect } from '@/utils/three';
-
-// Camera context for components to access the camera
-const CameraContext = createContext<PerspectiveCamera | null>(null);
-
-export const useCamera = () => {
-  const context = useContext(CameraContext);
-  if (!context) {
-    throw new Error('useCamera must be used within ParticleScene');
-  }
-  return context;
-};
 
 interface Props {
   cameraPosition?: Vector3;

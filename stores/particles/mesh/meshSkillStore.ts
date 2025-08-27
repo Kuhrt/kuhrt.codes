@@ -5,13 +5,10 @@ import { Skill } from '@/models/skills/Skill';
 
 export interface MeshSkillStore {
   skill: Skill | null;
-}
-
-export interface MeshSkillActions {
   setSkill: (value: MeshSkillStore['skill']) => void;
 }
 
-const useMeshSkillStore = create<MeshSkillStore & MeshSkillActions>()(
+const useMeshSkillStore = create<MeshSkillStore>()(
   devtools((set) => ({
     skill: null,
 

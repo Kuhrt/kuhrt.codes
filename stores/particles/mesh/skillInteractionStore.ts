@@ -4,7 +4,7 @@ import { devtools } from 'zustand/middleware';
 
 import { Skill } from '@/models/skills/Skill';
 
-import useHoverStore from './hoverStore';
+import useMeshHoverStore from './meshHoverStore';
 
 export interface SkillInteractionStore {
   selectedSkill: Skill | null;
@@ -12,7 +12,6 @@ export interface SkillInteractionStore {
   zoomTarget: Vector3 | null;
   zoomLookAt: Vector3 | null;
 
-  // Unified interaction methods
   selectAndZoomToSkill: (skill: Skill, position: Vector3) => void;
   toggleSkillZoom: (skill: Skill, position: Vector3) => void;
   clearZoom: () => void;
@@ -28,20 +27,16 @@ const useSkillInteractionStore = create<SkillInteractionStore>()(
     selectAndZoomToSkill: (skill: Skill, position: Vector3) => {
       const { selectedSkill, isZoomed } = get();
 
-      // If clicking the same skill that's already selected, toggle zoom
       if (selectedSkill && skill.name === selectedSkill.name) {
         if (isZoomed) {
-          // Zoom out - immediately resume animation and clear hover
           set({
             selectedSkill: null,
             isZoomed: false,
             zoomTarget: null,
             zoomLookAt: null
           });
-          // Clear hover state to resume animation immediately
-          useHoverStore.getState().setHoveredNode(null);
+          useMeshHoverStore.getState().setHoveredNode(null);
         } else {
-          // Zoom in
           const targetPos = new Vector3(
             position.x * 0.3,
             position.y * 0.3 + 2,

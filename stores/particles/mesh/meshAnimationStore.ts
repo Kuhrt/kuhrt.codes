@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-export interface AnimationStore {
+export interface MeshAnimationStore {
   isAnimating: boolean;
   isPaused: boolean;
   pauseAnimation: () => void;
@@ -9,7 +9,7 @@ export interface AnimationStore {
   togglePause: () => void;
 }
 
-const useAnimationStore = create<AnimationStore>()(
+const useMeshAnimationStore = create<MeshAnimationStore>()(
   devtools((set, get) => ({
     isAnimating: true,
     isPaused: false,
@@ -33,4 +33,4 @@ const useAnimationStore = create<AnimationStore>()(
   }))
 );
 
-export default useAnimationStore;
+export default useMeshAnimationStore;
