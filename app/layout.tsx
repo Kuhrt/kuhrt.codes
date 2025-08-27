@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import localFont from 'next/font/local';
 
+import Footer from '@/components/layouts/Footer';
 import NavBar from '@/components/navigation/NavBar';
 import Cursor from '@/components/ui/Cursor';
 
@@ -42,6 +43,7 @@ export default function RootLayout({
           <NavBar />
         </header>
         {children}
+        <Footer />
         <Cursor />
       </body>
     </html>

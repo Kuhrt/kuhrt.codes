@@ -47,7 +47,7 @@ export const skills: Skill[] = [
     level: 8,
     size: 1.8,
     summary:
-      "My current employer (Nexus) and previous employer (Smooth Fusion) are .NET shops. My skills have had to stay sharp with C# (pun intended), even though I think it has fallen behind in the web world. I've worked on many large scale projects in a variety of ways with it."
+      "My current employer (Nexus Cognitive) and previous employer (Smooth Fusion) are .NET shops. My skills have had to stay sharp with C# (pun intended), even though I think it has fallen behind in the web world. I've worked on many large scale projects in a variety of ways with it."
   },
   {
     name: 'DevOps',

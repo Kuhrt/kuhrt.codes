@@ -50,7 +50,7 @@ export const philosophies: Philosophy[] = [
     quote: '20% of features deliver 80% of the value',
     points: [
       [
-        'Relentlessly focus on what moves the needle',
+        'Relentless focus on what moves the needle',
         'Perfect execution on the wrong thing is still wrong'
       ],
       [

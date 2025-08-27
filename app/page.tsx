@@ -68,7 +68,7 @@ export default function HomePage() {
 
         <section
           id="skills"
-          className="relative flex flex-col items-center justify-center h-screen z-10"
+          className="relative flex flex-col items-center justify-center h-screen z-10 after:content-[''] lg:after:absolute lg:after:top-2/3 lg:after:left-0 lg:after:right-0 lg:after:bottom-0 lg:after:bg-gradient-to-b lg:after:from-transparent lg:after:to-background lg:after:z-100"
         >
           <h2 className="sr-only">Skills</h2>
           <MeshParticles />
