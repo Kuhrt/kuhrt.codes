@@ -27,7 +27,7 @@ const fontClashDisplay = localFont({
 
 export const metadata: Metadata = {
   title: 'Kuhrt.Codes',
-  description: 'Web Developer'
+  description: 'Web developer based out of Lubbock, Texas.'
 };
 
 export default function RootLayout({
