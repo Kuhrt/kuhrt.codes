@@ -1,6 +1,6 @@
-import { useMemo } from 'react';
+import { HTMLAttributes, useMemo } from 'react';
 
-interface RandomBlobProps {
+interface Props extends HTMLAttributes<HTMLDivElement> {
   className?: string;
   centerX?: number;
   centerY?: number;
@@ -45,17 +45,18 @@ const generateRandomBlob = (
   return `polygon(${points.map(([x, y]) => `${x}% ${y}%`).join(', ')})`;
 };
 
-export const RandomBlob: React.FC<RandomBlobProps> = ({
-  className = '',
-  centerX = 50,
-  centerY = 50,
-  radius,
-  radiusX,
-  radiusY,
-  pointCount = 12,
-  radiusVariation = 10,
-  positionVariation = 5
-}) => {
+export default function RandomBlob(props: Props) {
+  const {
+    centerX = 50,
+    centerY = 50,
+    radius,
+    radiusX,
+    radiusY,
+    pointCount = 12,
+    radiusVariation = 10,
+    positionVariation = 5,
+    ...restProps
+  } = props;
   const finalRadiusX = radiusX ?? radius ?? 30;
   const finalRadiusY = radiusY ?? radius ?? 30;
 
@@ -80,10 +81,6 @@ export const RandomBlob: React.FC<RandomBlobProps> = ({
   ]);
 
   return (
-    <div
-      style={{ clipPath }}
-      className={className}
-      suppressHydrationWarning={true}
-    />
+    <div style={{ clipPath }} suppressHydrationWarning={true} {...restProps} />
   );
-};
+}

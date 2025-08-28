@@ -6,7 +6,7 @@ import Container from './Container';
 
 export default function Footer() {
   return (
-    <footer className="py-8 lg:py-16">
+    <footer className="py-8 lg:py-16 z-20" id="footer" data-speed="0.85">
       <Container>
         <Card className="p-8! lg:p-16! card--no-hover">
           <CardContent className="text-center text-foreground space-y-8">

@@ -1,7 +1,7 @@
 import Container from '@/components/layouts/Container';
 import CodeSymbolParticles from '@/components/particles/code/CodeSymbolParticles';
 import MeshParticles from '@/components/particles/mesh/MeshParticles';
-import PhilosophyCard from '@/components/philosophy/PhilosophyCard';
+import PhilosophyCardGrid from '@/components/philosophy/PhilosophyCardGrid';
 import GradientHeading from '@/components/text/GradientHeading';
 import Typewriter from '@/components/text/Typewriter';
 import { philosophies } from '@/content/philosophy';
@@ -9,7 +9,7 @@ import { philosophies } from '@/content/philosophy';
 export default function HomePage() {
   return (
     <>
-      <main>
+      <main className="z-10 translate-0">
         <section
           id="intro"
           className="relative flex flex-col items-center justify-center h-screen z-10 after:content-[''] after:absolute after:top-2/3 after:left-0 after:right-0 after:bottom-0 after:bg-gradient-to-b after:from-transparent after:to-background after:z-20"
@@ -17,6 +17,7 @@ export default function HomePage() {
           <CodeSymbolParticles />
           <div className="relative text-center z-60">
             <GradientHeading level="h1" text="Hello, I'm Kuhrt" />
+
             <Typewriter className="text-2xl text-primary font-mono">
               I build modern web applications.
             </Typewriter>
@@ -30,6 +31,7 @@ export default function HomePage() {
           <div
             aria-hidden="true"
             className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
+            data-lag="0.8"
           >
             <div
               style={{
@@ -42,6 +44,7 @@ export default function HomePage() {
           <div
             aria-hidden="true"
             className="absolute inset-x-0 bottom-0 -z-10 transform-gpu overflow-hidden blur-3xl sm:bottom-0"
+            data-lag="1.2"
           >
             <div
               style={{
@@ -52,23 +55,16 @@ export default function HomePage() {
             ></div>
           </div>
           <Container>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 lg:gap-8 xl:gap-16">
-              <h2 className="text-5xl lg:text-7xl font-black md:col-span-2">
-                My Philosophy
-              </h2>
-              {philosophies.map((philosophy) => (
-                <PhilosophyCard
-                  key={philosophy.title}
-                  philosophy={philosophy}
-                />
-              ))}
-            </div>
+            <h2 className="text-5xl lg:text-7xl font-black mb-8 xl:mb-16">
+              My Philosophy
+            </h2>
+            <PhilosophyCardGrid philosophies={philosophies} />
           </Container>
         </section>
 
         <section
           id="skills"
-          className="relative flex flex-col items-center justify-center h-screen z-10 after:content-[''] lg:after:absolute lg:after:top-2/3 lg:after:left-0 lg:after:right-0 lg:after:bottom-0 lg:after:bg-gradient-to-b lg:after:from-transparent lg:after:to-background lg:after:z-100"
+          className="relative flex flex-col items-center justify-center h-screen z-10 after:content-[''] lg:after:absolute lg:after:left-0 lg:after:right-0 lg:after:bottom-0 lg:after:h-72 lg:after:bg-gradient-to-b lg:after:from-transparent lg:after:to-background lg:after:z-100"
         >
           <h2 className="sr-only">Skills</h2>
           <MeshParticles />

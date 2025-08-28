@@ -1,12 +1,15 @@
-import { HTMLAttributes } from 'react';
+import { HTMLAttributes, RefObject } from 'react';
 
 import { HeadingLevel } from '@/models/text/HeadingLevel';
 import { cn } from '@/utils/styles';
 
-function Card(props: HTMLAttributes<HTMLDivElement>) {
-  const { className, ...restProps } = props;
+interface CardProps extends HTMLAttributes<HTMLDivElement> {
+  ref?: RefObject<HTMLDivElement | null>;
+}
+function Card(props: CardProps) {
+  const { className, ref, ...restProps } = props;
 
-  return <div className={cn('card', className)} {...restProps} />;
+  return <div className={cn('card', className)} ref={ref} {...restProps} />;
 }
 
 interface CardTitleProps extends HTMLAttributes<HTMLHeadingElement> {

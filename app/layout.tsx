@@ -6,6 +6,7 @@ import localFont from 'next/font/local';
 
 import Footer from '@/components/layouts/Footer';
 import NavBar from '@/components/navigation/NavBar';
+import Providers from '@/components/providers/Providers';
 import Cursor from '@/components/ui/Cursor';
 
 const fontInter = Inter({
@@ -42,8 +43,10 @@ export default function RootLayout({
         <header className="fixed top-0 left-0 right-0 z-50">
           <NavBar />
         </header>
-        {children}
-        <Footer />
+        <Providers>
+          {children}
+          <Footer />
+        </Providers>
         <Cursor />
       </body>
     </html>

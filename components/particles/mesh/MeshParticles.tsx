@@ -6,7 +6,7 @@ import { Group, Mesh, Vector2, Vector3 } from 'three';
 import { skills } from '@/content/skills';
 import { threeSectionMouseMove } from '@/utils/three';
 
-import { RandomBlob } from '../../ui/RandomBlob';
+import RandomBlob from '../../ui/RandomBlob';
 import AnimationControllersWrapper from '../AnimationControllersWrapper';
 import ParticleScene from '../ParticleScene';
 import MeshConnections from './MeshConnections';
@@ -114,6 +114,7 @@ export default function MeshParticles() {
           pointCount={10}
           radiusVariation={15}
           positionVariation={8}
+          data-lag="0.1"
         />
       </div>
 
@@ -130,6 +131,7 @@ export default function MeshParticles() {
           pointCount={15}
           radiusVariation={15}
           positionVariation={8}
+          data-lag="1"
         />
       </div>
     </div>
