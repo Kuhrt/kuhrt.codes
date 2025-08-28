@@ -21,7 +21,7 @@ services:
     restart: unless-stopped
 
   kuhrt-codes:
-    image: ghcr.io/Kuhrt/kuhrt-codes:latest
+    image: ghcr.io/kuhrt/kuhrt.codes:latest
     container_name: kuhrt-codes
     networks:
       - web
