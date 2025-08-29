@@ -1,17 +1,14 @@
 'use client';
 
 import { useGSAP } from '@gsap/react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useRef } from 'react';
 
 import { Philosophy } from '@/models/philosophy/Philosophy';
+import { gsap } from '@/utils/gsap';
 
 import PhilosophyCard from './PhilosophyCard';
 
 const CONTAINER_CLASS = 'philosophy-container';
-
-gsap.registerPlugin(ScrollTrigger);
 
 interface Props {
   philosophies: Philosophy[];
