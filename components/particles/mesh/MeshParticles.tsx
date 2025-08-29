@@ -107,7 +107,7 @@ export default function MeshParticles() {
         className="absolute flex items-center justify-end inset-x-0 top-1/6 right-1/12 -z-10 transform-gpu overflow-hidden blur-3xl"
       >
         <RandomBlob
-          className="relative aspect-1155/678 w-150 bg-linear-to-tr from-secondary to-primary opacity-20"
+          className="relative aspect-1155/678 w-150 bg-linear-to-tr from-secondary to-primary opacity-20 will-change-transform"
           centerX={50}
           centerY={50}
           radius={30}
@@ -123,7 +123,7 @@ export default function MeshParticles() {
         className="absolute inset-x-0 bottom-1/6 -z-10 transform-gpu overflow-hidden blur-3xl"
       >
         <RandomBlob
-          className="relative left-0 aspect-1155/678 w-285 rotate-30 bg-linear-to-tr from-secondary to-secondary opacity-12"
+          className="relative left-0 aspect-1155/678 w-285 rotate-30 bg-linear-to-tr from-secondary to-secondary opacity-12 will-change-transform"
           centerX={50}
           centerY={50}
           radiusY={27}

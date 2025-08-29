@@ -70,7 +70,7 @@ jobs:
             cd /app/kuhrt-codes
 
             # Pull latest image
-            docker compose pull ghcr.io/kuhrt/kuhrt-codes:latest
+            docker pull ghcr.io/kuhrt/kuhrt-codes:latest
 
             # Stop any existing containers gracefully
             docker compose down 2>/dev/null || true

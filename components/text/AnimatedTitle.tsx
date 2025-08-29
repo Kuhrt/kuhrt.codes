@@ -61,8 +61,13 @@ export default function AnimatedTitle({
   }, [fallbackText, title]);
 
   return (
-    <div className={cn('inline-block overflow-hidden', className)}>
-      <span ref={textRef} className="inline-block">
+    <div
+      className={cn(
+        'inline-block overflow-hidden will-change-transform',
+        className
+      )}
+    >
+      <span ref={textRef} className="inline-block will-change-transform">
         {fallbackText}
       </span>
     </div>
