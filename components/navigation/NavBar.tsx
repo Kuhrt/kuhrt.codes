@@ -17,7 +17,7 @@ export default function NavBar() {
   };
 
   return (
-    <div className="flex items-center gap-4 w-full px-4 py-2">
+    <div className="bg-background lg:bg-transparent transition-colors flex items-center gap-4 w-full px-4 py-2">
       <button
         type="button"
         className="text-foreground font-display text-xl font-black uppercase flex items-center"
