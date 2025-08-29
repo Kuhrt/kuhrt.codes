@@ -1,5 +1,7 @@
 'use client';
 
+import '@/utils/gsap'; // Ensure GSAP plugins are registered early
+
 import { ReactNode, useMemo } from 'react';
 
 import { useScrollTrigger } from '@/hooks/scroll/useScrollTrigger';

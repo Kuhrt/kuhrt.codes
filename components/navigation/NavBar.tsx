@@ -26,11 +26,11 @@ export default function NavBar() {
       >
         Kuhrt Cowan
         <span
-          className={`transition-all duration-500 mx-2 ${!!currentSection?.title ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-full'}`}
+          className={`transition-all duration-500 mx-2 ${!!currentSection ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-full'}`}
         >
           &middot;
         </span>
-        <AnimatedTitle title={currentSection?.title ?? ''} />
+        <AnimatedTitle title={currentSection ?? ''} />
       </button>
     </div>
   );

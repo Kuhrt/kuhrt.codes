@@ -1,15 +1,11 @@
 'use client';
 
 import { useGSAP } from '@gsap/react';
-import { gsap } from 'gsap';
-import { ScrollSmoother } from 'gsap/ScrollSmoother';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useEffect, useRef } from 'react';
 
 import { ScrollSection } from '@/models/animations/ScrollSection';
 import useScrollStore from '@/stores/scrollStore';
-
-gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+import { ScrollSmoother, ScrollTrigger } from '@/utils/gsap';
 
 export interface UseScrollTriggerOptions {
   sections: ScrollSection[];
@@ -32,40 +28,7 @@ export function useScrollTrigger({
     sectionsRef.current = sections;
   }, [sections]);
 
-  // Helper function to update current section
-  const updateCurrentSection = (
-    section: { id: string; title: string },
-    element: HTMLElement
-  ) => {
-    if (currentSectionRef.current !== section.id) {
-      currentSectionRef.current = section.id;
-      setCurrentSection({
-        id: section.id,
-        title: section.title,
-        element
-      });
-      onSectionChange?.(section.id);
-    }
-  };
-
-  const createSectionTrigger = (section: { id: string; title: string }) => {
-    const element = document.getElementById(section.id);
-    if (!element) return null;
-
-    return ScrollTrigger.create({
-      trigger: element,
-      start: 'top center',
-      end: 'bottom center',
-      onEnter: () => {
-        updateCurrentSection(section, element);
-      },
-      onEnterBack: () => {
-        updateCurrentSection(section, element);
-      }
-    });
-  };
-
-  useGSAP(() => {
+  const { contextSafe } = useGSAP(() => {
     if (typeof window === 'undefined' || isInitializedRef.current) return;
 
     smoother.current = ScrollSmoother.create({
@@ -81,7 +44,36 @@ export function useScrollTrigger({
     });
 
     isInitializedRef.current = true;
-  }, [createSectionTrigger]);
+  });
+
+  const updateCurrentSection = contextSafe(
+    (section: { id: string; title: string }) => {
+      if (currentSectionRef.current !== section.id) {
+        currentSectionRef.current = section.id;
+        setCurrentSection(section.title);
+        onSectionChange?.(section.id);
+      }
+    }
+  );
+
+  const createSectionTrigger = contextSafe(
+    (section: { id: string; title: string }) => {
+      const element = document.getElementById(section.id);
+      if (!element) return null;
+
+      return ScrollTrigger.create({
+        trigger: element,
+        start: 'top center',
+        end: 'bottom center',
+        onEnter: () => {
+          updateCurrentSection(section);
+        },
+        onEnterBack: () => {
+          updateCurrentSection(section);
+        }
+      });
+    }
+  );
 
   return {
     smoother,
