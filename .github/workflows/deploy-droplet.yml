@@ -70,10 +70,10 @@ jobs:
             cd /app/kuhrt-codes
 
             # Pull latest image
-            docker-compose pull personal-site
+            docker compose pull kuhrt-codes
 
             # Restart services with zero downtime
-            docker-compose up -d
+            docker compose up -d
 
             # Clean up old images (keep last 2 versions)
             docker image prune -f --filter "until=72h"
