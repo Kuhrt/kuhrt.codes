@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail, Phone } from 'lucide-react';
+import { Briefcase, Github, Linkedin, Mail, Phone } from 'lucide-react';
 import { HTMLAttributes } from 'react';
 
 import { CURSOR_DATA_HOVER } from '@/constants/cursor';
@@ -24,6 +24,8 @@ export default function ContactCard(props: Props) {
         return <Github className={iconClassName} />;
       case 'linkedin':
         return <Linkedin className={iconClassName} />;
+      case 'portfolio':
+        return <Briefcase className={iconClassName} />;
       default:
         return null;
     }

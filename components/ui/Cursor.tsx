@@ -21,7 +21,8 @@ export default function Cursor() {
       cursorRef.current.style.left = `${clientX}px`;
       cursorRef.current.style.top = `${clientY}px`;
     };
-    const handleMouseLeave = () => removeCursorEffectClasses(cursorRef.current!);
+    const handleMouseLeave = () =>
+      removeCursorEffectClasses(cursorRef.current!);
 
     // CUSTOM CURSOR
     document.addEventListener('mousemove', handleMouseMove);
@@ -51,5 +52,11 @@ export default function Cursor() {
     };
   }, []);
 
-  return <div className="cursor" id="cursor" ref={cursorRef}></div>;
+  return (
+    <div
+      className="cursor will-change-transform"
+      id="cursor"
+      ref={cursorRef}
+    ></div>
+  );
 }

@@ -20,5 +20,10 @@ export const CONTACTS: Contact[] = [
     name: 'LinkedIn',
     link: 'https://www.linkedin.com/in/kuhrtcowan',
     linkText: 'linkedin.com/in/kuhrtcowan'
+  },
+  {
+    name: 'Portfolio',
+    link: 'https://github.com/Kuhrt/kuhrt.codes',
+    linkText: 'github.com/Kuhrt/kuhrt.codes'
   }
 ];

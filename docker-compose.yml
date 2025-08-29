@@ -1,10 +1,3 @@
-# docker-compose.yml for your Droplet
-version: '3.8'
-
-networks:
-  web:
-    driver: bridge
-
 services:
   # Simple Nginx reverse proxy (Cloudflare handles SSL)
   nginx:
@@ -21,8 +14,12 @@ services:
     restart: unless-stopped
 
   kuhrt-codes:
-    image: ghcr.io/kuhrt/kuhrt.codes:latest
+    image: ghcr.io/kuhrt/kuhrt-codes:latest
     container_name: kuhrt-codes
     networks:
       - web
     restart: unless-stopped
+
+networks:
+  web:
+    driver: bridge
