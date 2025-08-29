@@ -70,10 +70,16 @@ jobs:
             cd /app/kuhrt-codes
 
             # Pull latest image
-            docker compose pull kuhrt-codes
+            docker compose pull ghcr.io/kuhrt/kuhrt-codes:latest
+
+            # Stop any existing containers gracefully
+            docker compose down 2>/dev/null || true
 
             # Restart services with zero downtime
             docker compose up -d
+
+            # Check if containers are running
+            docker ps
 
             # Clean up old images (keep last 2 versions)
             docker image prune -f --filter "until=72h"
