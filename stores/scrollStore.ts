@@ -5,16 +5,16 @@ import { ScrollSection } from '@/models/animations/ScrollSection';
 
 export interface ScrollStore {
   sections: ScrollSection[];
-  currentSection: ScrollSection | null;
+  currentSection: string | null;
   addSection: (section: ScrollSection) => void;
-  setCurrentSection: (section: ScrollSection | null) => void;
+  setCurrentSection: (section: string | null) => void;
   getSectionById: (id: string) => ScrollSection | undefined;
 }
 
 const useScrollStore = create<ScrollStore>()(
   devtools((set, get) => ({
     sections: [],
-    currentSection: null,
+    currentSection: '',
 
     addSection: (section) => {
       set((state) => ({

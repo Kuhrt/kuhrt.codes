@@ -36,9 +36,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="bg-background">
       <body
-        className={`${fontInter.variable} ${fontJetBrainsMono.variable} ${fontClashDisplay.variable} antialiased cursor-none`}
+        className={`${fontInter.variable} ${fontJetBrainsMono.variable} ${fontClashDisplay.variable} antialiased cursor-none bg-background`}
       >
         <header className="fixed top-0 left-0 right-0 z-50">
           <NavBar />
