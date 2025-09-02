@@ -1,8 +1,12 @@
+'use client';
+
 import { Briefcase, Github, Linkedin, Mail, Phone } from 'lucide-react';
-import { HTMLAttributes } from 'react';
+import { HTMLAttributes, MouseEvent } from 'react';
 
 import { CURSOR_DATA_HOVER } from '@/constants/cursor';
 import { Contact } from '@/models/contacts/Contact';
+import { ContactMethod } from '@/models/contacts/ContactMethod';
+import { tagContactClick } from '@/utils/tagManager';
 
 import { Card, CardContent } from '../ui/Card';
 
@@ -31,16 +35,22 @@ export default function ContactCard(props: Props) {
     }
   };
 
+  const onClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    tagContactClick(contact.name.toLowerCase() as ContactMethod, {
+      url: contact.link,
+      target:
+        contact.link.startsWith('mailto') || contact.link.startsWith('tel')
+          ? '_self'
+          : '_blank'
+    });
+  };
+
   return (
     <a
       className={className}
       data-hover={CURSOR_DATA_HOVER}
-      href={contact.link}
-      target={
-        contact.link.startsWith('mailto') || contact.link.startsWith('tel')
-          ? '_self'
-          : '_blank'
-      }
+      onClick={onClick}
       rel="noopener noreferrer"
       {...restProps}
     >
