@@ -1,5 +1,6 @@
 import './globals.css';
 
+import { GoogleTagManager } from '@next/third-parties/google';
 import type { Metadata } from 'next';
 import { Inter, JetBrains_Mono } from 'next/font/google';
 import localFont from 'next/font/local';
@@ -37,6 +38,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="bg-background">
+      <GoogleTagManager gtmId="GTM-5BG3QCGM" />
       <body
         className={`${fontInter.variable} ${fontJetBrainsMono.variable} ${fontClashDisplay.variable} antialiased cursor-none bg-background`}
       >
