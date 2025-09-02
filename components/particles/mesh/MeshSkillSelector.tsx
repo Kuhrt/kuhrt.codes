@@ -7,6 +7,7 @@ import { skills } from '@/content/skills';
 import { Skill, skillColorVariables } from '@/models/skills/Skill';
 import useSkillInteractionStore from '@/stores/particles/mesh/skillInteractionStore';
 import { cn } from '@/utils/styles';
+import { tagSkillClick } from '@/utils/tagManager';
 
 interface Props {
   className?: string;
@@ -31,6 +32,7 @@ export default function MeshSkillSelector({
 
   const clickHandler = (newSkill: Skill) => {
     if (!!onClick) onClick(newSkill);
+    tagSkillClick(newSkill.name);
 
     if (skillNodePositions) {
       const nodePosition = skillNodePositions.get(newSkill.name);

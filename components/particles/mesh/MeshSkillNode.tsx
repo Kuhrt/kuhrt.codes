@@ -7,6 +7,7 @@ import { MESH_NETWORK_SPHERE } from '@/constants/particles/mesh';
 import { Skill } from '@/models/skills/Skill';
 import useMeshHoverStore from '@/stores/particles/mesh/meshHoverStore';
 import useSkillInteractionStore from '@/stores/particles/mesh/skillInteractionStore';
+import { tagSkillClick } from '@/utils/tagManager';
 
 interface Props {
   nodeIndex: number;
@@ -94,6 +95,7 @@ export default function MeshSkillNode({
 
   const handlePointerDown = useCallback(() => {
     if (!!onClick) onClick(skill);
+    tagSkillClick(skill.name);
 
     selectAndZoomToSkill(skill, meshRef.current.position);
   }, [onClick, skill, selectAndZoomToSkill]);
