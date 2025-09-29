@@ -1,3 +1,14 @@
+# Portfolio Projects
+
+- Personal Site: ([code](https://github.com/Kuhrt/kuhrt.codes?tab=readme-ov-file#kuhrtcodes) | [live demo](https://kuhrt.codes))
+   - NextJS
+- Practice Hub ([code](https://github.com/Kuhrt/portfolio-practice-hub))
+   - Python API
+   - NextJS Web App
+   - Postgres DB
+   - Keycloak Authentication
+   - Redis Caching
+
 # Kuhrt.Codes
 
 ## Overview
@@ -7,10 +18,6 @@ This project is my personal website and is part of my portfolio demonstrating my
 ## Live Demo
 
 🔗 **[View Live Project](https://kuhrt.codes)**
-
-## Portfolio Projects
-
-- The only one currently visible is this site
 
 ## Skills Demonstrated
 
