@@ -23,7 +23,7 @@ export const CONTACTS: Contact[] = [
   },
   {
     name: 'Portfolio',
-    link: 'https://github.com/Kuhrt/kuhrt.codes',
+    link: 'https://github.com/Kuhrt/kuhrt.codes?tab=readme-ov-file#portfolio-projects',
     linkText: 'github.com/Kuhrt/kuhrt.codes'
   }
 ];
