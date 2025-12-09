@@ -1,13 +1,29 @@
 # Portfolio Projects
 
+## Skills
+
 - Personal Site: ([code](https://github.com/Kuhrt/kuhrt.codes?tab=readme-ov-file#kuhrtcodes) | [live demo](https://kuhrt.codes))
    - NextJS
+   - Design
+   - Advanced Animations
+   - GSAP
+   - Three.js
 - Practice Hub ([code](https://github.com/Kuhrt/portfolio-practice-hub))
    - Python API
    - NextJS Web App
    - Postgres DB
    - Keycloak Authentication
    - Redis Caching
+- Board Game Tracker ([code](https://github.com/Kuhrt/portfolio-board-game-tracker)) _WIP_
+   - .NET API
+   - Vite/Vue Web App
+   - MSSql DB
+
+## Clients
+
+- [The Kid's Clinic](https://thekids.clinic)
+   - Design
+   - Hosting
 
 # Kuhrt.Codes
 
