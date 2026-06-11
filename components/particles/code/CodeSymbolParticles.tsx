@@ -11,6 +11,35 @@ import CodeSymbolParticle from './CodeSymbolParticle';
 const SYMBOLS = ['{', '}', '(', ')', '[', ']', '<', '>', ';', '=', '+', '-'];
 const SYMBOL_MULTIPLIER = 5;
 
+function generateParticles(mousePosition: Vector2): ReactNode[] {
+  return SYMBOLS.flatMap((symbol) => {
+    const particleNodes: ReactNode[] = [];
+    for (let i = 0; i < SYMBOL_MULTIPLIER; i++) {
+      // Random position
+      const positionX = (Math.random() - 0.5) * 50;
+      const positionY = (Math.random() - 0.5) * 30;
+      const positionZ = (Math.random() - 0.5) * 30;
+
+      // Random rotation
+      const rotationX = Math.random() * Math.PI;
+      const rotationY = Math.random() * Math.PI;
+
+      particleNodes.push(
+        <CodeSymbolParticle
+          key={`${symbol}-${i}`}
+          mousePosition={mousePosition}
+          position={new Vector3(positionX, positionY, positionZ)}
+          rotateX={rotationX}
+          rotateY={rotationY}
+          symbol={symbol}
+        />
+      );
+    }
+
+    return particleNodes;
+  });
+}
+
 export default function CodeSymbolParticles() {
   const [particles, setParticles] = useState<ReactNode[]>([]);
 
@@ -22,36 +51,16 @@ export default function CodeSymbolParticles() {
     };
     window.addEventListener('mousemove', handleMouseMove);
 
-    setParticles(
-      SYMBOLS.flatMap((symbol) => {
-        const particleNodes: ReactNode[] = [];
-        for (let i = 0; i < SYMBOL_MULTIPLIER; i++) {
-          // Random position
-          const positionX = (Math.random() - 0.5) * 50;
-          const positionY = (Math.random() - 0.5) * 30;
-          const positionZ = (Math.random() - 0.5) * 30;
+    // Particles are random, so they're generated after mount — and outside the
+    // synchronous effect body to avoid a cascading re-render
+    const frame = requestAnimationFrame(() => {
+      setParticles(generateParticles(mousePosition));
+    });
 
-          // Random rotation
-          const rotationX = Math.random() * Math.PI;
-          const rotationY = Math.random() * Math.PI;
-
-          particleNodes.push(
-            <CodeSymbolParticle
-              key={`${symbol}-${i}`}
-              mousePosition={mousePosition}
-              position={new Vector3(positionX, positionY, positionZ)}
-              rotateX={rotationX}
-              rotateY={rotationY}
-              symbol={symbol}
-            />
-          );
-        }
-
-        return particleNodes;
-      })
-    );
-
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      cancelAnimationFrame(frame);
+    };
   }, []);
 
   return (

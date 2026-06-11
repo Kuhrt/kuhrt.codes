@@ -4,21 +4,21 @@ import { useFrame } from '@react-three/fiber';
 import { RefObject, useRef } from 'react';
 import { Mesh, Vector3 } from 'three';
 
-import { skills } from '@/content/skills';
+import { capabilities } from '@/content/capabilities';
+import useCapabilityInteractionStore from '@/stores/particles/mesh/capabilityInteractionStore';
 import useMeshAnimationStore from '@/stores/particles/mesh/meshAnimationStore';
-import useSkillInteractionStore from '@/stores/particles/mesh/skillInteractionStore';
 
 interface Props {
   nodeRefs: RefObject<(Mesh | undefined)[]>;
-  skillNodePositions: RefObject<Map<string, Vector3>>;
+  capabilityNodePositions: RefObject<Map<string, Vector3>>;
 }
 
 export default function NodeAnimationController({
   nodeRefs,
-  skillNodePositions
+  capabilityNodePositions
 }: Props) {
   const { isAnimating, isPaused } = useMeshAnimationStore();
-  const { isZoomed } = useSkillInteractionStore();
+  const { isZoomed } = useCapabilityInteractionStore();
 
   const nodeStates = useRef<
     Map<
@@ -61,7 +61,7 @@ export default function NodeAnimationController({
       node.rotation.y += 0.003 * delta * 60;
 
       if (shouldAnimate) {
-        if (index < skills.length) {
+        if (index < capabilities.length) {
           const floatY =
             Math.sin(state.clock.elapsedTime * 0.7 + nodeState.floatOffset) *
             1.5;
@@ -74,9 +74,12 @@ export default function NodeAnimationController({
           node.position.z +=
             Math.sin(state.clock.elapsedTime * 0.3 + index) * 0.005;
 
-          const skill = skills[index];
-          if (skill) {
-            skillNodePositions.current.set(skill.name, node.position.clone());
+          const capability = capabilities[index];
+          if (capability) {
+            capabilityNodePositions.current.set(
+              capability.name,
+              node.position.clone()
+            );
           }
         } else {
           node.position.add(nodeState.velocity);
@@ -107,7 +110,6 @@ export default function NodeAnimationController({
         }
       }
 
-      // Store last position for smooth resuming
       nodeState.lastPosition.copy(node.position);
     });
   });

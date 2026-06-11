@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wc -l /e/projects/kuhrt.codes/website/components/**/*.tsx)",
+      "Bash(npx next:*)",
+      "Bash(cd:*)",
+      "Bash(rmdir models/skills)",
+      "Bash(rmdir components/skills)",
+      "Bash(npx jest:*)",
+      "Bash(npm run:*)",
+      "Bash(npm install:*)"
+    ]
+  }
+}

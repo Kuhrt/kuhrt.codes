@@ -21,18 +21,20 @@ export default function CodeSymbolParticle(
   const [isInteracting, setIsInteracting] = useState(false);
   const [opacity, setOpacity] = useState(0.5);
 
-  const velocity = useMemo(
-    () =>
-      new Vector3(
-        (Math.random() - 0.5) * 0.02,
-        (Math.random() - 0.5) * 0.02,
-        (Math.random() - 0.5) * 0.02
-      ),
-    []
-  );
+  // Random drift is assigned in an effect — render must stay pure
+  const velocityRef = useRef(new Vector3());
+  useEffect(() => {
+    velocityRef.current.set(
+      (Math.random() - 0.5) * 0.02,
+      (Math.random() - 0.5) * 0.02,
+      (Math.random() - 0.5) * 0.02
+    );
+  }, []);
 
   // TODO: Use delta time where needed
   useFrame((state, delta) => {
+    const velocity = velocityRef.current;
+
     // Give the mouse gravity
     const mouseAttraction = new Vector3(
       mousePosition.x * 25,

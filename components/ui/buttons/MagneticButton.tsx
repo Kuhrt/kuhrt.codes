@@ -1,20 +1,22 @@
 'use client';
 
-import { HTMLAttributes, useEffect, useRef } from 'react';
+import { HTMLAttributes, RefObject, useEffect, useRef } from 'react';
 
 import { CURSOR_DATA_HOVER } from '@/constants/cursor';
 import { cn } from '@/utils/styles';
 
-export default function MagneticButton(
-  props: HTMLAttributes<HTMLButtonElement>
-) {
-  const buttonRef = useRef<HTMLButtonElement>(null);
-  const { className, ...rest } = props;
+interface Props extends HTMLAttributes<HTMLElement> {
+  href?: string;
+}
+
+export default function MagneticButton(props: Props) {
+  const elementRef = useRef<HTMLElement>(null);
+  const { className, href, ...rest } = props;
 
   useEffect(() => {
-    if (!buttonRef.current) return;
+    if (!elementRef.current) return;
 
-    const magneticBtn = buttonRef.current;
+    const magneticBtn = elementRef.current;
 
     const handleMouseMove = (e: MouseEvent) => {
       const rect = magneticBtn.getBoundingClientRect();
@@ -41,15 +43,30 @@ export default function MagneticButton(
       magneticBtn.removeEventListener('mousemove', handleMouseMove);
       magneticBtn.removeEventListener('mouseleave', handleMouseLeave);
     };
-  }, []);
+    // The rendered element changes with href (anchor vs button) — re-attach listeners
+  }, [href]);
+
+  const sharedProps = {
+    className: cn('magnetic-btn', className),
+    'data-hover': CURSOR_DATA_HOVER,
+    ...rest
+  };
+
+  if (href) {
+    return (
+      <a
+        ref={elementRef as RefObject<HTMLAnchorElement>}
+        href={href}
+        {...sharedProps}
+      />
+    );
+  }
 
   return (
     <button
-      ref={buttonRef}
-      className={cn('magnetic-btn', className)}
+      ref={elementRef as RefObject<HTMLButtonElement>}
       type="button"
-      data-hover={CURSOR_DATA_HOVER}
-      {...rest}
+      {...sharedProps}
     />
   );
 }

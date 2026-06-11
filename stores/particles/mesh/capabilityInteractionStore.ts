@@ -2,35 +2,41 @@ import { Vector3 } from 'three';
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
-import { Skill } from '@/models/skills/Skill';
+import { Capability } from '@/models/capabilities/Capability';
 
 import useMeshHoverStore from './meshHoverStore';
 
-export interface SkillInteractionStore {
-  selectedSkill: Skill | null;
+export interface CapabilityInteractionStore {
+  selectedCapability: Capability | null;
   isZoomed: boolean;
   zoomTarget: Vector3 | null;
   zoomLookAt: Vector3 | null;
 
-  selectAndZoomToSkill: (skill: Skill, position: Vector3) => void;
-  toggleSkillZoom: (skill: Skill, position: Vector3) => void;
+  selectAndZoomToCapability: (
+    capability: Capability,
+    position: Vector3
+  ) => void;
+  toggleCapabilityZoom: (capability: Capability, position: Vector3) => void;
   clearZoom: () => void;
 }
 
-const useSkillInteractionStore = create<SkillInteractionStore>()(
+const useCapabilityInteractionStore = create<CapabilityInteractionStore>()(
   devtools((set, get) => ({
-    selectedSkill: null,
+    selectedCapability: null,
     isZoomed: false,
     zoomTarget: null,
     zoomLookAt: null,
 
-    selectAndZoomToSkill: (skill: Skill, position: Vector3) => {
-      const { selectedSkill, isZoomed } = get();
+    selectAndZoomToCapability: (
+      capability: Capability,
+      position: Vector3
+    ) => {
+      const { selectedCapability, isZoomed } = get();
 
-      if (selectedSkill && skill.name === selectedSkill.name) {
+      if (selectedCapability && capability.name === selectedCapability.name) {
         if (isZoomed) {
           set({
-            selectedSkill: null,
+            selectedCapability: null,
             isZoomed: false,
             zoomTarget: null,
             zoomLookAt: null
@@ -43,21 +49,20 @@ const useSkillInteractionStore = create<SkillInteractionStore>()(
             position.z * 0.3 + 15
           );
           set({
-            selectedSkill: skill,
+            selectedCapability: capability,
             isZoomed: true,
             zoomTarget: targetPos,
             zoomLookAt: position
           });
         }
       } else {
-        // Always select and zoom to different skill
         const targetPos = new Vector3(
           position.x * 0.3,
           position.y * 0.3 + 2,
           position.z * 0.3 + 15
         );
         set({
-          selectedSkill: skill,
+          selectedCapability: capability,
           isZoomed: true,
           zoomTarget: targetPos,
           zoomLookAt: position
@@ -65,26 +70,28 @@ const useSkillInteractionStore = create<SkillInteractionStore>()(
       }
     },
 
-    toggleSkillZoom: (skill: Skill, position: Vector3) => {
-      const { selectedSkill, isZoomed } = get();
+    toggleCapabilityZoom: (capability: Capability, position: Vector3) => {
+      const { selectedCapability, isZoomed } = get();
 
-      if (selectedSkill && skill.name === selectedSkill.name && isZoomed) {
-        // Zoom out
+      if (
+        selectedCapability &&
+        capability.name === selectedCapability.name &&
+        isZoomed
+      ) {
         set({
-          selectedSkill: null,
+          selectedCapability: null,
           isZoomed: false,
           zoomTarget: null,
           zoomLookAt: null
         });
       } else {
-        // Zoom in
         const targetPos = new Vector3(
           position.x * 0.3,
           position.y * 0.3 + 2,
           position.z * 0.3 + 15
         );
         set({
-          selectedSkill: skill,
+          selectedCapability: capability,
           isZoomed: true,
           zoomTarget: targetPos,
           zoomLookAt: position
@@ -94,7 +101,7 @@ const useSkillInteractionStore = create<SkillInteractionStore>()(
 
     clearZoom: () => {
       set({
-        selectedSkill: null,
+        selectedCapability: null,
         isZoomed: false,
         zoomTarget: null,
         zoomLookAt: null
@@ -103,4 +110,4 @@ const useSkillInteractionStore = create<SkillInteractionStore>()(
   }))
 );
 
-export default useSkillInteractionStore;
+export default useCapabilityInteractionStore;

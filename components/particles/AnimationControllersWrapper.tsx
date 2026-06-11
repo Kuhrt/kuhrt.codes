@@ -8,11 +8,11 @@ import UnifiedAnimationController from './mesh/UnifiedAnimationController';
 
 export default function AnimationControllersWrapper({
   nodeRefs,
-  skillNodePositions,
+  capabilityNodePositions,
   connectionsGroupRef
 }: {
   nodeRefs: RefObject<(Mesh | undefined)[]>;
-  skillNodePositions: RefObject<Map<string, Vector3>>;
+  capabilityNodePositions: RefObject<Map<string, Vector3>>;
   connectionsGroupRef: RefObject<{
     updateConnections: () => void;
   } | null>;
@@ -27,7 +27,7 @@ export default function AnimationControllersWrapper({
       />
       <NodeAnimationController
         nodeRefs={nodeRefs}
-        skillNodePositions={skillNodePositions}
+        capabilityNodePositions={capabilityNodePositions}
       />
     </>
   );

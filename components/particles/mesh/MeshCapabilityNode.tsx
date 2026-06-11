@@ -4,48 +4,45 @@ import { useCallback, useEffect, useRef } from 'react';
 import { type Mesh } from 'three';
 
 import { MESH_NETWORK_SPHERE } from '@/constants/particles/mesh';
-import { Skill } from '@/models/skills/Skill';
+import { Capability } from '@/models/capabilities/Capability';
+import useCapabilityInteractionStore from '@/stores/particles/mesh/capabilityInteractionStore';
 import useMeshHoverStore from '@/stores/particles/mesh/meshHoverStore';
-import useSkillInteractionStore from '@/stores/particles/mesh/skillInteractionStore';
-import { tagSkillClick } from '@/utils/tagManager';
+import { tagCapabilityClick } from '@/utils/tagManager';
 
 interface Props {
   nodeIndex: number;
-  onClick?: (skill: Skill) => void;
-  onHover?: (skill: Skill) => void;
+  onClick?: (capability: Capability) => void;
+  onHover?: (capability: Capability) => void;
   onRef: (mesh: Mesh | null) => void;
-  skill: Skill;
+  capability: Capability;
   totalNodes: number;
 }
 
-export default function MeshSkillNode({
+const CAPABILITY_NODE_SIZE = 1.8;
+
+export default function MeshCapabilityNode({
   nodeIndex,
   onClick,
   onHover,
   onRef,
-  skill,
+  capability,
   totalNodes
 }: Props) {
-  const { selectAndZoomToSkill, isZoomed } = useSkillInteractionStore();
+  const { selectAndZoomToCapability, isZoomed } =
+    useCapabilityInteractionStore();
   const { hoveredNodeId, setHoveredNode } = useMeshHoverStore();
 
   const meshRef = useRef<Mesh>(null!);
-  const isHovered = hoveredNodeId === skill.name;
+  const isHovered = hoveredNodeId === capability.name;
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const renderGeometry = () => {
     const geometry = MESH_NETWORK_SPHERE.clone();
-    if (nodeIndex % 3 === 0) {
-      geometry.scale(skill.size * 0.5, skill.size * 0.5, skill.size * 0.5);
-    } else if (nodeIndex % 3 === 1) {
-      geometry.scale(skill.size * 0.4, skill.size * 0.4, skill.size * 0.4);
-    } else {
-      geometry.scale(skill.size * 0.6, skill.size * 0.6, skill.size * 0.6);
-    }
+    const scale = CAPABILITY_NODE_SIZE * 0.5;
+    geometry.scale(scale, scale, scale);
     return <primitive object={geometry} />;
   };
 
-  // Set initial position
   useEffect(() => {
     const angle = (nodeIndex / totalNodes) * Math.PI * 2;
     const radius = 10;
@@ -57,7 +54,6 @@ export default function MeshSkillNode({
     meshRef.current.position.set(initialX, initialY, initialZ);
   }, [nodeIndex, totalNodes]);
 
-  // Update outside ref pattern
   useEffect(() => {
     if (meshRef.current) {
       onRef(meshRef.current);
@@ -72,18 +68,18 @@ export default function MeshSkillNode({
   }, [onRef]);
 
   const handlePointerEnter = useCallback(() => {
-    if (!!onHover) onHover(skill);
+    if (onHover) onHover(capability);
     if (hoverTimeoutRef.current) {
       clearTimeout(hoverTimeoutRef.current);
     }
 
     hoverTimeoutRef.current = setTimeout(() => {
-      setHoveredNode(skill.name);
+      setHoveredNode(capability.name);
     }, 100);
-  }, [onHover, skill, setHoveredNode]);
+  }, [onHover, capability, setHoveredNode]);
 
   const handlePointerLeave = useCallback(() => {
-    if (!!onHover) onHover(skill);
+    if (onHover) onHover(capability);
     if (hoverTimeoutRef.current) {
       clearTimeout(hoverTimeoutRef.current);
     }
@@ -91,16 +87,15 @@ export default function MeshSkillNode({
     hoverTimeoutRef.current = setTimeout(() => {
       setHoveredNode(null);
     }, 150);
-  }, [onHover, skill, setHoveredNode]);
+  }, [onHover, capability, setHoveredNode]);
 
   const handlePointerDown = useCallback(() => {
-    if (!!onClick) onClick(skill);
-    tagSkillClick(skill.name);
+    if (onClick) onClick(capability);
+    tagCapabilityClick(capability.name);
 
-    selectAndZoomToSkill(skill, meshRef.current.position);
-  }, [onClick, skill, selectAndZoomToSkill]);
+    selectAndZoomToCapability(capability, meshRef.current.position);
+  }, [onClick, capability, selectAndZoomToCapability]);
 
-  // Add hover effect - scale up slightly when hovered
   useEffect(() => {
     const hoverScale = isHovered || isZoomed ? 1.2 : 1.0;
     if (meshRef.current) {
@@ -114,14 +109,14 @@ export default function MeshSkillNode({
       onPointerEnter={handlePointerEnter}
       onPointerLeave={handlePointerLeave}
       onPointerDown={handlePointerDown}
-      userData={{ skillName: skill.name }}
+      userData={{ capabilityName: capability.name }}
       castShadow
       receiveShadow
       visible
     >
       {renderGeometry()}
       <meshBasicMaterial
-        color={skill.color}
+        color={capability.color}
         transparent
         opacity={isHovered ? 1.0 : 0.9}
       />

@@ -22,9 +22,6 @@ export default function Typewriter(
     if (!children || typeof children !== 'string')
       throw new Error('Children must be text only');
 
-    setDisplayedText('');
-    currentIndexRef.current = 0;
-
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
@@ -40,7 +37,13 @@ export default function Typewriter(
       }
     };
 
-    typeNextChar();
+    // Reset inside the first tick — setState directly in the effect body
+    // would force a synchronous cascading render
+    timeoutRef.current = setTimeout(() => {
+      setDisplayedText('');
+      currentIndexRef.current = 0;
+      typeNextChar();
+    }, 0);
 
     return () => {
       if (timeoutRef.current) {

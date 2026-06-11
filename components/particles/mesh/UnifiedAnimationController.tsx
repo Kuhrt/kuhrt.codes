@@ -4,9 +4,9 @@ import { useFrame } from '@react-three/fiber';
 import { RefObject, useEffect, useRef } from 'react';
 import { PerspectiveCamera } from 'three';
 
+import useCapabilityInteractionStore from '@/stores/particles/mesh/capabilityInteractionStore';
 import useMeshAnimationStore from '@/stores/particles/mesh/meshAnimationStore';
 import useMeshHoverStore from '@/stores/particles/mesh/meshHoverStore';
-import useSkillInteractionStore from '@/stores/particles/mesh/skillInteractionStore';
 
 interface Props {
   camera: PerspectiveCamera;
@@ -20,7 +20,7 @@ export default function UnifiedAnimationController({
   connectionsGroupRef
 }: Props) {
   const { isAnimating, isPaused } = useMeshAnimationStore();
-  const { isZoomed, zoomTarget, zoomLookAt } = useSkillInteractionStore();
+  const { isZoomed, zoomTarget, zoomLookAt } = useCapabilityInteractionStore();
   const { hoveredNodeId } = useMeshHoverStore();
 
   const timeRef = useRef(0);
@@ -51,9 +51,11 @@ export default function UnifiedAnimationController({
     } else if (!isZoomed && !isPaused) {
       timeRef.current += delta;
       const cameraTime = timeRef.current * 0.2;
-      camera.position.x = Math.sin(cameraTime) * 28;
-      camera.position.z = Math.cos(cameraTime) * 28;
-      camera.position.y = 8 + Math.sin(cameraTime * 0.7) * 4;
+      camera.position.set(
+        Math.sin(cameraTime) * 28,
+        8 + Math.sin(cameraTime * 0.7) * 4,
+        Math.cos(cameraTime) * 28
+      );
       camera.lookAt(0, 0, 0);
 
       // Update connection lines to follow nodes
