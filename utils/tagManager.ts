@@ -5,11 +5,11 @@ import { sendGTMEvent } from '@next/third-parties/google';
 import { GTAG_EVENTS, GTAG_INTERACTIONS } from '@/constants/tagManager';
 import { ContactMethod } from '@/models/contacts/ContactMethod';
 
-export const tagSkillClick = (skillName: string) => {
+export const tagCapabilityClick = (capabilityName: string) => {
   sendGTMEvent({
-    event: GTAG_EVENTS.skillInteraction,
-    skill_name: skillName,
-    section: 'skills',
+    event: GTAG_EVENTS.capabilityInteraction,
+    capability_name: capabilityName,
+    section: 'capabilities',
     interaction_type: GTAG_INTERACTIONS.viewDetails
   });
 };

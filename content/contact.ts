@@ -1,5 +1,8 @@
 import { Contact } from '@/models/contacts/Contact';
 
+export const CONTACT_CTA_LINK =
+  'mailto:kuhrt@kuhrt.codes?subject=Let%27s%20work%20together';
+
 export const CONTACTS: Contact[] = [
   {
     name: 'Phone',
