@@ -28,8 +28,35 @@ export function useScrollTrigger({
     sectionsRef.current = sections;
   }, [sections]);
 
-  const { contextSafe } = useGSAP(() => {
+  useGSAP(() => {
     if (typeof window === 'undefined' || isInitializedRef.current) return;
+
+    // Plain closures are enough here: the triggers are created inside the GSAP
+    // context, and their callbacks only touch the store — no tweens
+    const updateCurrentSection = (section: ScrollSection) => {
+      if (currentSectionRef.current !== section.id) {
+        currentSectionRef.current = section.id;
+        setCurrentSection(section.title);
+        onSectionChange?.(section.id);
+      }
+    };
+
+    const createSectionTrigger = (section: ScrollSection) => {
+      const element = document.getElementById(section.id);
+      if (!element) return null;
+
+      return ScrollTrigger.create({
+        trigger: element,
+        start: 'top center',
+        end: 'bottom center',
+        onEnter: () => {
+          updateCurrentSection(section);
+        },
+        onEnterBack: () => {
+          updateCurrentSection(section);
+        }
+      });
+    };
 
     smoother.current = ScrollSmoother.create({
       smooth: 1.2,
@@ -46,37 +73,9 @@ export function useScrollTrigger({
     isInitializedRef.current = true;
   });
 
-  const updateCurrentSection = contextSafe(
-    (section: { id: string; title: string }) => {
-      if (currentSectionRef.current !== section.id) {
-        currentSectionRef.current = section.id;
-        setCurrentSection(section.title);
-        onSectionChange?.(section.id);
-      }
-    }
-  );
-
-  const createSectionTrigger = contextSafe(
-    (section: { id: string; title: string }) => {
-      const element = document.getElementById(section.id);
-      if (!element) return null;
-
-      return ScrollTrigger.create({
-        trigger: element,
-        start: 'top center',
-        end: 'bottom center',
-        onEnter: () => {
-          updateCurrentSection(section);
-        },
-        onEnterBack: () => {
-          updateCurrentSection(section);
-        }
-      });
-    }
-  );
-
+  // Returned as refs — unwrap .current in handlers or effects, not during render
   return {
     smoother,
-    triggers: triggersRef.current
+    triggers: triggersRef
   };
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { type Mesh, type MeshBasicMaterial } from 'three';
 
 interface Props {
@@ -11,7 +11,8 @@ interface Props {
 export default function MeshNode({ nodeIndex, onRef }: Props) {
   const meshRef = useRef<Mesh>(null!);
   const materialRef = useRef<MeshBasicMaterial>(null!);
-  const [floatOffset, setFloatOffset] = useState(0);
+  // Only read by the pulse interval, never rendered — a ref avoids re-renders
+  const floatOffsetRef = useRef(0);
 
   useEffect(() => {
     if (meshRef.current) {
@@ -20,7 +21,7 @@ export default function MeshNode({ nodeIndex, onRef }: Props) {
       meshRef.current.position.y = (Math.random() - 0.5) * 20;
       meshRef.current.position.z = (Math.random() - 0.5) * 35;
 
-      setFloatOffset(nodeIndex * 0.3 + Math.random() * 2);
+      floatOffsetRef.current = nodeIndex * 0.3 + Math.random() * 2;
     }
   }, [nodeIndex]);
 
@@ -39,13 +40,13 @@ export default function MeshNode({ nodeIndex, onRef }: Props) {
     const interval = setInterval(() => {
       if (materialRef.current) {
         const time = Date.now() * 0.002;
-        const pulse = Math.sin(time + floatOffset) * 0.2 + 0.6;
+        const pulse = Math.sin(time + floatOffsetRef.current) * 0.2 + 0.6;
         materialRef.current.opacity = pulse * 0.4;
       }
     }, 16); // ~60fps
 
     return () => clearInterval(interval);
-  }, [floatOffset]);
+  }, []);
 
   return (
     <mesh ref={meshRef}>

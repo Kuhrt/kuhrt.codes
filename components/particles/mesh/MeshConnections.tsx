@@ -17,7 +17,7 @@ import {
   type Mesh
 } from 'three';
 
-import { skills } from '@/content/skills';
+import { capabilities } from '@/content/capabilities';
 import {
   MeshConnectionDatum,
   MeshConnectionType
@@ -59,18 +59,18 @@ export default function MeshConnections({ nodeRefs, ref }: Props) {
     const allNodes = nodeRefs.current.filter(
       (node): node is Mesh => node !== undefined
     );
-    const expectedNodeCount = skills.length + MESH_NODE_COUNT;
+    const expectedNodeCount = capabilities.length + MESH_NODE_COUNT;
     if (allNodes.length < expectedNodeCount) return connections;
 
     for (let i = 0; i < allNodes.length; i++) {
       let connectionCount = 0;
-      const maxConnections = i < skills.length ? 6 : 3;
-      const nodeAType = i < skills.length ? 'main' : 'connector';
+      const maxConnections = i < capabilities.length ? 6 : 3;
+      const nodeAType = i < capabilities.length ? 'main' : 'connector';
 
       for (let j = i + 1; j < allNodes.length; j++) {
         if (connectionCount >= maxConnections) break;
 
-        const nodeBType = j < skills.length ? 'main' : 'connector';
+        const nodeBType = j < capabilities.length ? 'main' : 'connector';
         const distance = allNodes[i].position.distanceTo(allNodes[j].position);
 
         let shouldConnect = false;

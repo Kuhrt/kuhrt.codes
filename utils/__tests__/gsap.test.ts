@@ -1,5 +1,5 @@
 // Import the centralized GSAP configuration
-import '../utils/gsap';
+import '../gsap';
 
 import { gsap } from 'gsap';
 import { ScrollSmoother } from 'gsap/ScrollSmoother';

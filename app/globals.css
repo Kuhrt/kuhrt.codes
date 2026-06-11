@@ -1,6 +1,6 @@
 @import 'tailwindcss';
 
-@source inline("{before:,}{bg,text,border}-[var({--skill-typescript,--skill-react,--skill-nodejs,--skill-vue,--skill-python,--skill-dotnet,--skill-devops,--skill-sql})]{!,}");
+@source inline("{before:,}{bg,text,border}-[var({--capability-system-design,--capability-frontend,--capability-devops,--capability-data,--capability-leadership,--capability-ai})]{!,}");
 
 :root {
   --background: #0a0a0b;
@@ -13,14 +13,12 @@
   --text-muted: #a1a1a1;
   --border: #333333;
 
-  --skill-typescript: #3178c6;
-  --skill-react: #61dafb;
-  --skill-nodejs: #339933;
-  --skill-vue: #4fc08d;
-  --skill-python: #3776ab;
-  --skill-dotnet: #512bd4;
-  --skill-devops: var(--primary);
-  --skill-sql: var(--secondary);
+  --capability-system-design: #3b82f6;
+  --capability-frontend: #61dafb;
+  --capability-devops: var(--primary);
+  --capability-data: #f59e0b;
+  --capability-leadership: #a855f7;
+  --capability-ai: #ec4899;
 
   --sheen-gradient: linear-gradient(
     90deg,
@@ -51,6 +49,23 @@
   --text-gradient: clamp(3rem, 9vw, 10rem);
   --text-gradient--font-weight: 900;
   --text-gradient--text-transform: uppercase;
+}
+
+@keyframes edgeFlow {
+  from {
+    stroke-dashoffset: 20;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* React Flow dark theme overrides */
+.react-flow__node {
+  cursor: none !important;
+}
+.react-flow__attribution {
+  display: none !important;
 }
 
 @layer base {
@@ -160,7 +175,7 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: var(--skill-color, var(--primary));
+    background: var(--capability-color, var(--primary));
     transition: left 0.3s ease;
     z-index: -1;
   }

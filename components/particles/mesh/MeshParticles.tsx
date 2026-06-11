@@ -3,17 +3,17 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { Group, Mesh, Vector2, Vector3 } from 'three';
 
-import { skills } from '@/content/skills';
+import { capabilities } from '@/content/capabilities';
 import { threeSectionMouseMove } from '@/utils/three';
 
 import RandomBlob from '../../ui/RandomBlob';
 import AnimationControllersWrapper from '../AnimationControllersWrapper';
 import ParticleScene from '../ParticleScene';
+import MeshCapabilityDialog from './MeshCapabilityDialog';
+import MeshCapabilityNode from './MeshCapabilityNode';
+import MeshCapabilitySelector from './MeshCapabilitySelector';
 import MeshConnections from './MeshConnections';
 import MeshNode from './MeshNode';
-import MeshSkillDialog from './MeshSkillDialog';
-import MeshSkillNode from './MeshSkillNode';
-import MeshSkillSelector from './MeshSkillSelector';
 
 export const MESH_NODE_COUNT = 40;
 
@@ -23,29 +23,30 @@ export default function MeshParticles() {
     null
   );
   const nodeRefs = useRef<(Mesh | undefined)[]>([]);
-  const skillNodePositions = useRef<Map<string, Vector3>>(new Map());
+  const capabilityNodePositions = useRef<Map<string, Vector3>>(new Map());
 
-  const setSkillNodeRef = useCallback((index: number, mesh: Mesh | null) => {
-    if (mesh) {
-      nodeRefs.current[index] = mesh;
-      // Store the skill name and position for the selector to use
-      const skill = skills[index];
-      if (skill) {
-        // Ensure we have the current position
-        const position = mesh.position.clone();
-        skillNodePositions.current.set(skill.name, position);
+  const setCapabilityNodeRef = useCallback(
+    (index: number, mesh: Mesh | null) => {
+      if (mesh) {
+        nodeRefs.current[index] = mesh;
+        const capability = capabilities[index];
+        if (capability) {
+          const position = mesh.position.clone();
+          capabilityNodePositions.current.set(capability.name, position);
+        }
+      } else {
+        nodeRefs.current[index] = undefined;
+        const capability = capabilities[index];
+        if (capability) {
+          capabilityNodePositions.current.delete(capability.name);
+        }
       }
-    } else {
-      nodeRefs.current[index] = undefined;
-      const skill = skills[index];
-      if (skill) {
-        skillNodePositions.current.delete(skill.name);
-      }
-    }
-  }, []);
+    },
+    []
+  );
 
   const setNodeRef = useCallback((index: number, mesh: Mesh | null) => {
-    const adjustedIndex = index + skills.length; // Offset to store after skill nodes
+    const adjustedIndex = index + capabilities.length;
     if (mesh) {
       nodeRefs.current[adjustedIndex] = mesh;
     } else {
@@ -66,22 +67,22 @@ export default function MeshParticles() {
 
   return (
     <div className="relative w-full h-full">
-      <MeshSkillDialog />
+      <MeshCapabilityDialog />
 
-      <MeshSkillSelector
+      <MeshCapabilitySelector
         className="absolute bottom-4 lg:bottom-auto lg:top-1/2 right-4 lg:right-8 lg:-translate-y-1/2 z-60 transition-all"
-        skillNodePositions={skillNodePositions.current}
+        capabilityNodePositions={capabilityNodePositions}
       />
 
       <ParticleScene cameraPosition={new Vector3(0, 0, 30)}>
         <group ref={nodeGroupRef}>
-          {skills.map((skill, index) => (
-            <MeshSkillNode
-              key={`skill-node-${index}`}
+          {capabilities.map((capability, index) => (
+            <MeshCapabilityNode
+              key={`capability-node-${index}`}
               nodeIndex={index}
-              skill={skill}
-              totalNodes={skills.length}
-              onRef={(mesh) => setSkillNodeRef(index, mesh)}
+              capability={capability}
+              totalNodes={capabilities.length}
+              onRef={(mesh) => setCapabilityNodeRef(index, mesh)}
             />
           ))}
 
@@ -98,7 +99,7 @@ export default function MeshParticles() {
 
         <AnimationControllersWrapper
           nodeRefs={nodeRefs}
-          skillNodePositions={skillNodePositions}
+          capabilityNodePositions={capabilityNodePositions}
           connectionsGroupRef={connectionsGroupRef}
         />
       </ParticleScene>
