@@ -65,7 +65,7 @@ export default function HomePage() {
       >
         <div
           aria-hidden="true"
-          className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80 will-change-transform"
+          className="pointer-events-none absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80 will-change-transform"
           data-lag="0.8"
         >
           <div
@@ -78,7 +78,7 @@ export default function HomePage() {
         </div>
         <div
           aria-hidden="true"
-          className="absolute inset-x-0 bottom-0 -z-10 transform-gpu overflow-hidden blur-3xl sm:bottom-0 will-change-transform"
+          className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 transform-gpu overflow-hidden blur-3xl sm:bottom-0 will-change-transform"
           data-lag="1.2"
         >
           <div
