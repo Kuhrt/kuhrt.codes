@@ -17,7 +17,7 @@ export default function HomePage() {
     <main className="z-10 translate-0">
       <section
         id={SECTION_IDS.intro}
-        className="relative flex flex-col items-center justify-center h-screen z-10 after:content-[''] after:absolute after:top-2/3 after:left-0 after:right-0 after:bottom-0 after:bg-gradient-to-b after:from-transparent after:to-background after:z-60"
+        className="relative flex flex-col items-center justify-center h-screen z-10 after:content-[''] after:absolute after:top-2/3 after:left-0 after:right-0 after:bottom-0 after:bg-gradient-to-b after:from-transparent after:to-background after:z-60 after:pointer-events-none"
       >
         <CodeSymbolParticles />
         <div className="relative text-center z-60 px-6">
